@@ -1,5 +1,9 @@
 const express = require('express');
+require('express-async-errors')
+
 const app = express();
+
+
 
 app.use(express.json())
 
@@ -18,13 +22,14 @@ app.post('/test-json', (req, res, next) => {
 
 // For testing express-async-errors
 app.get('/test-error', async (req, res, next) => {
-  const error = new Error("Hello World!")
-  next(error)
+  throw new Error("Hello World!")
 });
 
-app.use('/test-error', (err, req, res, next) => {
-   res.send('Error: ' + err.message)
-})
+app.use((err, req, res, next) => {
+    res.status(403);
+    res.send({ error: err.message });
+  next(err);
+});
 
 const port = 5000;
 app.listen(port, () => console.log('Server is listening on port', port));
