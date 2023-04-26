@@ -85,3 +85,14 @@ const deleteDog = (req, res) => {
 // ------------------------------  ROUTER ------------------------------  
 
 // Your code here
+const express = require('express')
+
+const router = express.Router()
+
+router.get('/', getAllDogs)
+router.get('/:dogId', validateDogId, getDogById)
+router.post('/', validateDogInfo, createDog)
+router.put('/:dogId', updateDog)
+router.delete('/:dogId', deleteDog)
+
+module.exports = router

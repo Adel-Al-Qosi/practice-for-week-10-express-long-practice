@@ -1,6 +1,7 @@
 const express = require('express');
 require('express-async-errors')
 const logger = require('./routes/logger')
+const router = require('./routes/dogs')
 
 const app = express();
 
@@ -9,6 +10,8 @@ const app = express();
 app.use(express.json())
 
 app.use(logger)
+
+app.use('/dogs', router)
 
 // For testing purposes, GET /
 app.get('/', (req, res) => {
@@ -34,12 +37,12 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-// app.get('*', (req, res) => {
-//   const error = new Error("The requested resource couldn't be found.")
-//   error.statusCode = 404
-//   throw error
-// })
+app.get('*', (req, res) => {
+  const error = new Error("The requested resource couldn't be found.")
+  error.statusCode = 404
+  throw error
+})
 
 
-const port = 5000;
+const port = 5001;
 app.listen(port, () => console.log('Server is listening on port', port));
