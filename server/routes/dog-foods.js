@@ -60,3 +60,11 @@ const createFood = (req, res) => {
 // ------------------------------  ROUTER ------------------------------  
 
 // Your code here
+const express = require('express')
+const newFoodRouter = express.Router({ mergeParams: true })
+
+newFoodRouter.get('/', getFoodsByDogId)
+newFoodRouter.post('/', validateFoodInfo, createFood)
+
+module.exports = newFoodRouter
+

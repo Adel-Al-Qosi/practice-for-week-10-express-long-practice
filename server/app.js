@@ -2,6 +2,7 @@ const express = require('express');
 require('express-async-errors')
 const logger = require('./routes/logger')
 const router = require('./routes/dogs')
+const newFoodRouter = require('./routes/dog-foods')
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(express.json())
 app.use(logger)
 
 app.use('/dogs', router)
+
+app.use('/dogs/:dogId/foods', newFoodRouter)
 
 // For testing purposes, GET /
 app.get('/', (req, res) => {
